@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && next export",
     "start": "node_modules/next/dist/bin/next start",
-    "lint": "next lint"
+    "test": "jest"
   },
   "dependencies": {
     "@types/node": "18.11.9",

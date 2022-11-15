@@ -26,11 +26,20 @@ jobs:
           npm install
           npm run build --if-present
 
+      # - name: Upload artifact for deployment job
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: node-app
+      #     path: .
+
+      - name: Zip all files for upload between jobs
+        run: zip next.zip ./* .next -qr
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: .
+          path: next.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -52,4 +61,7 @@ jobs:
           app-name: 'toshida-sandbox-linux'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E692C6D5E047431D92374D2B1F8EC68A }}
-          package: .
+          package: next.zip
+
+      - name: Delete zip file
+        run: rm next.zip
